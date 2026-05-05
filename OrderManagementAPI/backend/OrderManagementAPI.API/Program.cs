@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using OrderManagementAPI.Infrastructure;
 using OrderManagementAPI.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,10 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(connectionString));
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
