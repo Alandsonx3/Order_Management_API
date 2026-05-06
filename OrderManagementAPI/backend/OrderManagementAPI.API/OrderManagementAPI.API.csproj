@@ -19,6 +19,7 @@
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>
     <ProjectReference Include="..\..\OrderManagementAPI.Application\OrderManagementAPI.Application.csproj" />
+    <ProjectReference Include="..\OrderManagementAPI.Application\OrderManagementAPI.Application.csproj" />
     <ProjectReference Include="..\OrderManagementAPI.Infrastructure\OrderManagementAPI.Infrastructure.csproj" />
   </ItemGroup>
 
