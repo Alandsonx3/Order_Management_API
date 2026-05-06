@@ -1,6 +1,5 @@
-using Microsoft.EntityFrameworkCore;
+using OrderManagementAPI.Application;
 using OrderManagementAPI.Infrastructure;
-using OrderManagementAPI.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddService();
 
 var app = builder.Build();
 

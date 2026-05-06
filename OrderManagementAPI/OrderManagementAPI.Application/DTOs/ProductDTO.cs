@@ -1,6 +1,6 @@
 ﻿namespace OrderManagementAPI.Application.DTOs
 {
-    public class ProductResponseDto
+    public class ProductDTO
     {
         public string Description { get; set; } = string.Empty;
         public string Category { get; set; } = string.Empty;

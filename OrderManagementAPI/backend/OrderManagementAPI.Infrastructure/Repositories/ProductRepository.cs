@@ -19,54 +19,45 @@ namespace OrderManagementAPI.Infrastructure.Repositories
             return await _context.Products.ToListAsync();
         }
 
-        public async Task<Product> GetProductAsync(int Id)
+        public async Task<Product?> GetProductAsync(int id)
         {
-            var product = await _context.Products
-                .FirstOrDefaultAsync(x => x.Id == Id);
-
-            if (product is null) throw new ArgumentNullException();
-
-            return product;
+            return await _context.Products
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<Product> CreateProductAsync(Product product)
         {
-            var existing = await _context.Products
-                .FirstOrDefaultAsync(x => x.Id == product.Id);
-
-            if (existing != null)
-                throw new InvalidOperationException("Já existe um produto cadastrado");
-
             await _context.AddAsync(product);
             await _context.SaveChangesAsync();
 
             return product;
         }
 
-        public async Task<Product> UpdateProductAsync(Product product)
+        public async Task<Product?> UpdateProductAsync(Product product)
         {
             var existing = await _context.Products
                 .FirstOrDefaultAsync(x => x.Id == product.Id);
 
-            if (existing == null)
-                throw new Exception("Product not found");
+            if (existing == null) return null;
 
             _context.Entry(existing).CurrentValues.SetValues(product);
 
             await _context.SaveChangesAsync();
 
-            return product;
+            return existing;
         }
 
-        public async Task RemoveProductAsync(int Id)
+        public async Task<bool> RemoveProductAsync(int id)
         {
             var existing = await _context.Products
-                .FirstOrDefaultAsync(x => x.Id == Id);
+                .FirstOrDefaultAsync(x => x.Id == id);
 
-            if(existing == null)
-                throw new Exception("Product not found");
+            if (existing == null) return false;
 
             _context.Products.Remove(existing);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }
