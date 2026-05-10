@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
-using OrderManagementAPI.Application.DTOs;
+using OrderManagementAPI.Application.DTOs.Request;
 
 namespace OrderManagementAPI.Application.Validators
 {
-    public class ProductServiceValidator : AbstractValidator<ProductDTO>
+    public class CreateProductServiceValidator : AbstractValidator<CreateProductRequestDto>
     {
-        public ProductServiceValidator ()
+        public CreateProductServiceValidator ()
         {
             RuleFor(p => p.Description).NotNull().WithMessage("Descrição não pode ser vazia");
             RuleFor(p => p.Category).NotNull().WithMessage("Descrição não pode ser vazia");
