@@ -1,71 +1,78 @@
-﻿using Mapster;
-using FluentValidation.Results;
-using OrderManagementAPI.Application.DTOs;
+﻿using FluentValidation;
+using Mapster;
+using OrderManagementAPI.Application.DTOs.Request;
+using OrderManagementAPI.Application.DTOs.Response;
 using OrderManagementAPI.Application.Interfaces.Repositories;
 using OrderManagementAPI.Application.Interfaces.Services;
 using OrderManagementAPI.Domain.Entities;
-using FluentValidation;
 
 namespace OrderManagementAPI.Application.Services
 {
     public class ProductService : IProductService
     {
         private protected IProductRepository _repository;
-        private protected IValidator<ProductDTO> _validate;
-        public ProductService(IProductRepository repository, IValidator<ProductDTO> validate)
+        private protected IValidator<CreateProductRequestDto> _createValidate;
+        private protected IValidator<UpdateProductRequestDto> _updateValidate;
+        public ProductService(
+            IProductRepository repository, 
+            IValidator<CreateProductRequestDto> createValidate,
+            IValidator<UpdateProductRequestDto> updateValidate)
         {
             _repository = repository;
-            _validate = validate;
+            _createValidate = createValidate;
+            _updateValidate = updateValidate;
         }
 
-        public async Task<List<ProductDTO>> GetProductsAsync()
+        public async Task<List<ProductResponseDto>> GetProductsAsync()
         {
             var products = await _repository.GetProductsAsync();
 
             if (products == null || !products.Any())
-                return new List<ProductDTO>();
+                return new List<ProductResponseDto>();
 
-            return products.Adapt<List<ProductDTO>>();
+            return products.Adapt<List<ProductResponseDto>>();
         }
 
-        public async Task<ProductDTO?> GetProductAsync(int id)
+        public async Task<ProductResponseDto?> GetProductAsync(int id)
         {
-            var product = await _repository.GetProductAsync(id);
+            var product = await _repository.GetProductByIdAsync(id);
 
             if (product == null) return null;
 
-            return product.Adapt<ProductDTO>();
+            return product.Adapt<ProductResponseDto>();
         }
 
-        public async Task<ProductDTO?> CreateProductAsync(ProductDTO productDTO)
+        public async Task<ProductResponseDto> CreateProductAsync(CreateProductRequestDto request)
         { 
-            var result = await _validate.ValidateAsync(productDTO);
+            var validationResult = await _createValidate.ValidateAsync(request);
 
-            if (!result.IsValid)
-                throw new ValidationException(result.Errors); 
+            if (!validationResult.IsValid)
+                throw new ValidationException(validationResult.Errors);
 
-            var product = productDTO.Adapt<Product>();
-
-            product.IsActive = true;
-            product.CreatedAt = DateTime.UtcNow;
+            var product = new Product(
+                request.Description,
+                request.Category,
+                request.Price,
+                request.Quantify
+                );
 
             var created = await _repository.CreateProductAsync(product);
 
-            return created.Adapt<ProductDTO>();
+            return created.Adapt<ProductResponseDto>();
         }
 
-        public async Task<ProductDTO?> UpdateProductAsync(ProductDTO productDTO)
+        public async Task<ProductResponseDto?> UpdateProductAsync(UpdateProductRequestDto request)
         {
-            var result = await _validate.ValidateAsync(productDTO);
+            var validationResult = await _updateValidate.ValidateAsync(request);
 
-            if (!result.IsValid)
-                throw new ValidationException(result.Errors);
+            if (!validationResult.IsValid)
+                throw new ValidationException(validationResult.Errors);
 
-            var product = productDTO.Adapt<Product>();
+            var product = request.Adapt<Product>();
 
             var updated = await _repository.UpdateProductAsync(product);
 
-            return updated.Adapt<ProductDTO>();
+            return updated.Adapt<ProductResponseDto>();
         }
 
         public async Task<bool> RemoveProductAsync(int id)

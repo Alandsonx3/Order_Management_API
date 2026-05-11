@@ -1,11 +1,9 @@
 ﻿using FluentValidation;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OrderManagementAPI.Application.DTOs;
+using OrderManagementAPI.Application.DTOs.Request;
+using OrderManagementAPI.Application.Interfaces.Services;
+using OrderManagementAPI.Application.Services;
 using OrderManagementAPI.Application.Validators;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OrderManagementAPI.Application
 {
@@ -13,7 +11,10 @@ namespace OrderManagementAPI.Application
     {
         public static IServiceCollection AddService(this IServiceCollection service)
         {
-            service.AddScoped<IValidator<ProductDTO>, ProductServiceValidator>();
+            service.AddScoped<IValidator<CreateProductRequestDto>, CreateProductServiceValidator>();
+            service.AddScoped<IValidator<UpdateProductRequestDto>, UpdateProductServiceValidator>();
+
+            service.AddScoped<IProductService, ProductService>();
 
             return service;
         }

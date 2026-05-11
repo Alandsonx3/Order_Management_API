@@ -17,6 +17,7 @@ namespace OrderManagementAPI.Infrastructure
                 options.UseSqlServer(connectionString));
 
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             return services;
         }
