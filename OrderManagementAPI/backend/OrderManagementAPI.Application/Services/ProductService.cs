@@ -1,11 +1,10 @@
-﻿using Mapster;
-using FluentValidation.Results;
+﻿using FluentValidation;
+using Mapster;
+using OrderManagementAPI.Application.DTOs.Request;
+using OrderManagementAPI.Application.DTOs.Response;
 using OrderManagementAPI.Application.Interfaces.Repositories;
 using OrderManagementAPI.Application.Interfaces.Services;
 using OrderManagementAPI.Domain.Entities;
-using FluentValidation;
-using OrderManagementAPI.Application.DTOs.Request;
-using OrderManagementAPI.Application.DTOs.Response;
 
 namespace OrderManagementAPI.Application.Services
 {
@@ -36,7 +35,7 @@ namespace OrderManagementAPI.Application.Services
 
         public async Task<ProductResponseDto?> GetProductAsync(int id)
         {
-            var product = await _repository.GetProductAsync(id);
+            var product = await _repository.GetProductByIdAsync(id);
 
             if (product == null) return null;
 
