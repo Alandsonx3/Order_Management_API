@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OrderManagementAPI.Application.DTOs.Request;
+using OrderManagementAPI.Application.DTOs.Request.Product;
 using OrderManagementAPI.Application.Interfaces.Services;
 
 namespace OrderManagementAPI.API.Controllers

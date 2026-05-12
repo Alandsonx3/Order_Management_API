@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace OrderManagementAPI.Domain.Entities
+﻿namespace OrderManagementAPI.Domain.Entities
 {
     public class Product
     {
@@ -14,6 +10,7 @@ namespace OrderManagementAPI.Domain.Entities
         public bool IsActive { get; private set; }
         public DateTime CreatedAt { get; private set; }
 
+        public Product() { }
         public Product(string description, string category, decimal price, int quantify) {
             Description = description; 
             Category = category;
@@ -22,6 +19,5 @@ namespace OrderManagementAPI.Domain.Entities
             IsActive = true;
             CreatedAt = DateTime.UtcNow;
         }
-
     }
 }

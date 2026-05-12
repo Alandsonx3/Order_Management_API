@@ -19,15 +19,22 @@ namespace OrderManagementAPI.Infrastructure.Repositories
             return await _context.Products.ToListAsync();
         }
 
-        public async Task<Product?> GetProductAsync(int id)
+        public async Task<List<Product>> GetProductsByIdsAsync(List<int> Ids) 
         {
             return await _context.Products
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .Where(p => Ids.Contains(p.Id))
+                .ToListAsync();
+        }
+
+        public async Task<Product?> GetProductByIdAsync(int id)
+        {
+            return await _context.Products
+                .FirstOrDefaultAsync(product => product.Id == id);
         }
 
         public async Task<Product> CreateProductAsync(Product product)
         {
-            await _context.AddAsync(product);
+            await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
 
             return product;
@@ -40,8 +47,7 @@ namespace OrderManagementAPI.Infrastructure.Repositories
 
             if (existing == null) return null;
 
-            _context.Entry(existing).CurrentValues.SetValues(product);
-
+            _context.Products.Entry(existing).CurrentValues.SetValues(product);
             await _context.SaveChangesAsync();
 
             return existing;
