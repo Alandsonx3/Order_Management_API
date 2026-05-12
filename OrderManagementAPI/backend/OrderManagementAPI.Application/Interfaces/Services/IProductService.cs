@@ -1,5 +1,5 @@
-﻿using OrderManagementAPI.Application.DTOs.Request;
-using OrderManagementAPI.Application.DTOs.Response;
+﻿using OrderManagementAPI.Application.DTOs.Request.Product;
+using OrderManagementAPI.Application.DTOs.Response.Product;
 
 namespace OrderManagementAPI.Application.Interfaces.Services
 {

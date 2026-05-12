@@ -14,5 +14,12 @@ namespace OrderManagementAPI.Domain.Entities
         public Product Product { get; set; } = new Product();
         public Order Order { get; set; } = new Order();
 
+
+        public OrderItem(int productId, int quantify, decimal priceActual) 
+        { 
+            ProductId = productId;
+            Quantify = quantify;
+            PriceActual = priceActual;
+        }
     }
 }

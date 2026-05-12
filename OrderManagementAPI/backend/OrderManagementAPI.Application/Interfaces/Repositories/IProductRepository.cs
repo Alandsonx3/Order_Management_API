@@ -5,6 +5,7 @@ namespace OrderManagementAPI.Application.Interfaces.Repositories
     public interface IProductRepository
     {
         Task<List<Product>> GetProductsAsync();
+        Task<List<Product>> GetProductsByIdsAsync(List<int> productIds);
         Task<Product?> GetProductByIdAsync(int Id);
         Task<Product> CreateProductAsync(Product product);
         Task<Product?> UpdateProductAsync(Product product);

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Mapster;
-using OrderManagementAPI.Application.DTOs.Request;
-using OrderManagementAPI.Application.DTOs.Response;
+using OrderManagementAPI.Application.DTOs.Request.Product;
+using OrderManagementAPI.Application.DTOs.Response.Product;
 using OrderManagementAPI.Application.Interfaces.Repositories;
 using OrderManagementAPI.Application.Interfaces.Services;
 using OrderManagementAPI.Domain.Entities;

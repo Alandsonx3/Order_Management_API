@@ -19,6 +19,13 @@ namespace OrderManagementAPI.Infrastructure.Repositories
             return await _context.Products.ToListAsync();
         }
 
+        public async Task<List<Product>> GetProductsByIdsAsync(List<int> Ids) 
+        {
+            return await _context.Products
+                .Where(p => Ids.Contains(p.Id))
+                .ToListAsync();
+        }
+
         public async Task<Product?> GetProductByIdAsync(int id)
         {
             return await _context.Products
